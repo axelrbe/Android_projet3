@@ -3,4 +3,13 @@
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_neighbour">New neighbour</string>
+    <string name="name">Name</string>
+    <string name="location">location</string>
+    <string name="phone_number">phone number</string>
+    <string name="facebook_url">facebook url</string>
+    <string name="aboutMe">A propos de moi</string>
+    <string name="neighbour_description">neighbour description</string>
+    <string name="neighbour_favorite_btn">neighbour favorite btn</string>
+    <string name="arrow_back">arrow back</string>
+    <string name="neighbour_profile_picture">Neighbour profile picture</string>
 </resources>
