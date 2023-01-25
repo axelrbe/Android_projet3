@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import java.io.Serializable;
 
@@ -33,6 +35,8 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
 
     protected Neighbour neighbour;
 
+    private NeighbourApiService mApiService;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,7 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
         ButterKnife.bind(this);
 
         neighbour = getIntent().getParcelableExtra(MyNeighbourRecyclerViewAdapter.NEIGHBOUR_INFO);
+        mApiService = DI.getNeighbourApiService();
 
         neighbourName1 = findViewById(R.id.neighbour_name);
         neighbourName2 = findViewById(R.id.neighbour_name2);
@@ -57,6 +62,7 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
         });
 
         setAllNeighbourInfos();
+        changeFavoriteStatus();
     }
 
     private void setAllNeighbourInfos() {
@@ -69,5 +75,27 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
             neighbourAddress.setText(neighbour.getAddress());
             Glide.with(this).load(neighbour.getAvatarUrl()).centerCrop().into(profileImage);
         }
+    }
+
+    private void changeFavoriteStatus() {
+        Log.d(TAG, "changeFavoriteStatus: " + neighbour.checkIfFavorite());
+
+        if(neighbour.checkIfFavorite()) {
+            neighbourFavoriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
+        } else {
+            neighbourFavoriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_white_24dp));
+        }
+
+        neighbourFavoriteBtn.setOnClickListener(v -> {
+            mApiService.changeFavorite(neighbour);
+
+            if(neighbour.checkIfFavorite()) {
+                neighbour.setFavorite(false);
+            } else {
+                neighbour.setFavorite(true);
+            }
+
+            changeFavoriteStatus();
+        });
     }
 }

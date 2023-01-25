@@ -27,6 +27,7 @@ public class Neighbour implements Parcelable {
 
     /** About me */
     private String aboutMe;
+    private boolean favorite;
 
     /**
      * Constructor
@@ -35,13 +36,14 @@ public class Neighbour implements Parcelable {
      * @param avatarUrl
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, boolean favorite) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.favorite = favorite;
     }
 
     public long getId() {
@@ -105,6 +107,18 @@ public class Neighbour implements Parcelable {
         return Objects.hash(id);
     }
 
+    /* Début de la gestion des favoris */
+    public boolean checkIfFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+    /* Fin de la gestion des favoris */
+
+
+    /* Implémentation de parcelizable */
     public static final Parcelable.Creator<Neighbour> CREATOR = new Parcelable.Creator<Neighbour>() {
         public Neighbour createFromParcel(Parcel in) {
             return new Neighbour(in);
@@ -122,6 +136,7 @@ public class Neighbour implements Parcelable {
         phoneNumber = in.readString();
         address = in.readString();
         aboutMe = in.readString();
+        favorite = in.readByte() != 0;
     }
 
     public int describeContents() {
@@ -135,5 +150,7 @@ public class Neighbour implements Parcelable {
         dest.writeString(phoneNumber);
         dest.writeString(address);
         dest.writeString(aboutMe);
+        dest.writeByte((byte) (favorite ? 1 : 0));
     }
+    /* Fin de l'impémentation */
 }

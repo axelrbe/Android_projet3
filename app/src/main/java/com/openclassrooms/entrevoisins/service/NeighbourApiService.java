@@ -27,4 +27,10 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    /**
+     * Modifier le status de favori
+     * @param neighbour
+     */
+    void changeFavorite(Neighbour neighbour);
 }

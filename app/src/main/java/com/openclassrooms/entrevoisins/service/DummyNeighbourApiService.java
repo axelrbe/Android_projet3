@@ -36,4 +36,9 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
     }
+
+    /* Implémentation de la fonction pour changer le status de favoris */
+    public void changeFavorite(Neighbour neighbour) {
+        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(!neighbour.checkIfFavorite());
+    }
 }
