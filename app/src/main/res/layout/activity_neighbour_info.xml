@@ -129,6 +129,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -159,6 +160,13 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <View
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"/>
 
 </android.support.constraint.ConstraintLayout>
 
