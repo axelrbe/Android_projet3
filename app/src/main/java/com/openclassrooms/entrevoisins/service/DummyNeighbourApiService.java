@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
-    private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+    private final List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
 
     /**
@@ -39,7 +39,20 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     /* Implémentation de la fonction pour changer le status de favoris */
+    @Override
     public void changeFavorite(Neighbour neighbour) {
         neighbours.get(neighbours.indexOf(neighbour)).setFavorite(!neighbour.checkIfFavorite());
+    }
+
+    @Override
+    public List<Neighbour> getAllFavorites() {
+        /* Récupérer tout les favoris dans une liste */
+        List<Neighbour> allFavoriteNeighbour = new ArrayList();
+        for(Neighbour neighbour : neighbours) {
+            if(neighbour.checkIfFavorite()) {
+                allFavoriteNeighbour.add(neighbour);
+            }
+        }
+        return allFavoriteNeighbour;
     }
 }

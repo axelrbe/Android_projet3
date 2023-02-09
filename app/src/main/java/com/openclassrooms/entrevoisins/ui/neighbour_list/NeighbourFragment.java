@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,9 +27,7 @@ import java.util.Objects;
 public class NeighbourFragment extends Fragment {
 
     public static final String TAB_LAYOUT_ITEM = "isNeighbourOrFavorite";
-    private String isFavoriteList;
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
 
@@ -41,9 +37,13 @@ public class NeighbourFragment extends Fragment {
      */
     public static NeighbourFragment newInstance(String tabLayoutItem) {
         NeighbourFragment fragment = new NeighbourFragment();
+
+        /* Faire passer le nom de la section en argument */
         Bundle args = new Bundle();
         args.putString(TAB_LAYOUT_ITEM, tabLayoutItem);
         fragment.setArguments(args);
+        /* Fin du passage d'argument */
+
         return fragment;
     }
 
@@ -68,20 +68,14 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        isFavoriteList = getArguments().getString(TAB_LAYOUT_ITEM);
+        List<Neighbour> neighbours = mApiService.getNeighbours();
+        String isFavoriteList = getArguments().getString(TAB_LAYOUT_ITEM);
+        List<Neighbour> allFavoriteNeighbour = mApiService.getAllFavorites();
 
         if(Objects.equals(isFavoriteList, "favorites")) {
-            /* Récupérer tout les favoris dans une liste */
-            List<Neighbour> allFavoriteNeighbour = new ArrayList();
-            for(Neighbour neighbour : mNeighbours) {
-                if(neighbour.checkIfFavorite()) {
-                        allFavoriteNeighbour.add(neighbour);
-                }
-            }
             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(allFavoriteNeighbour));
         } else {
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(neighbours));
         }
     }
 
