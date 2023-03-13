@@ -1,12 +1,13 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -19,10 +20,12 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+@SuppressLint("NonConstantResourceId")
 public class AddNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar)
@@ -46,18 +49,16 @@ public class AddNeighbourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_neighbour);
         ButterKnife.bind(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getNeighbourApiService();
         init();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home : {
-                finish();
-                return true;
-            }
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -66,7 +67,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         mNeighbourImage = randomImage();
         Glide.with(this).load(mNeighbourImage).placeholder(R.drawable.ic_account)
                 .apply(RequestOptions.circleCropTransform()).into(avatar);
-        nameInput.getEditText().addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(nameInput.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
@@ -84,11 +85,11 @@ public class AddNeighbourActivity extends AppCompatActivity {
         boolean isFavorite = false;
         Neighbour neighbour = new Neighbour(
                 System.currentTimeMillis(),
-                nameInput.getEditText().getText().toString(),
+                Objects.requireNonNull(nameInput.getEditText()).getText().toString(),
                 mNeighbourImage,
-                addressInput.getEditText().getText().toString(),
-                phoneInput.getEditText().getText().toString(),
-                aboutMeInput.getEditText().getText().toString(),
+                Objects.requireNonNull(addressInput.getEditText()).getText().toString(),
+                Objects.requireNonNull(phoneInput.getEditText()).getText().toString(),
+                Objects.requireNonNull(aboutMeInput.getEditText()).getText().toString(),
                 isFavorite
         );
         mApiService.createNeighbour(neighbour);
@@ -105,7 +106,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     /**
      * Used to navigate to this activity
-     * @param activity
      */
     public static void navigate(FragmentActivity activity) {
         Intent intent = new Intent(activity, AddNeighbourActivity.class);

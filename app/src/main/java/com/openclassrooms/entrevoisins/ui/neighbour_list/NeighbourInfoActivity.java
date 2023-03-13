@@ -14,14 +14,9 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
-import java.io.Serializable;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NeighbourInfoActivity extends AppCompatActivity implements Serializable {
-    public static final String TAG = "neighbourInfo";
-
+public class NeighbourInfoActivity extends AppCompatActivity {
     TextView neighbourName1;
     TextView neighbourName2;
     TextView neighbourDesc;
@@ -78,8 +73,6 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
     }
 
     private void changeFavoriteStatus() {
-        Log.d(TAG, "changeFavoriteStatus: " + neighbour.checkIfFavorite());
-
         if(neighbour.checkIfFavorite()) {
             neighbourFavoriteBtn.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_white_24dp));
         } else {
@@ -88,13 +81,7 @@ public class NeighbourInfoActivity extends AppCompatActivity implements Serializ
 
         neighbourFavoriteBtn.setOnClickListener(v -> {
             mApiService.changeFavorite(neighbour);
-
-            if(neighbour.checkIfFavorite()) {
-                neighbour.setFavorite(false);
-            } else {
-                neighbour.setFavorite(true);
-            }
-
+            neighbour.setFavorite(!neighbour.checkIfFavorite());
             changeFavoriteStatus();
         });
     }

@@ -12,14 +12,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private final List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Neighbour> getNeighbours() {
-        return neighbours;
-    }
+    public List<Neighbour> getNeighbours() {return neighbours;}
 
     /**
      * {@inheritDoc}
@@ -34,14 +31,14 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
      * @param neighbour
      */
     @Override
-    public void createNeighbour(Neighbour neighbour) {
-        neighbours.add(neighbour);
-    }
+    public void createNeighbour(Neighbour neighbour) {neighbours.add(neighbour);}
 
     /* Implémentation de la fonction pour changer le status de favoris */
     @Override
     public void changeFavorite(Neighbour neighbour) {
-        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(!neighbour.checkIfFavorite());
+        if (neighbours.contains(neighbour)) {
+            neighbours.get(neighbours.indexOf(neighbour)).setFavorite(!neighbour.checkIfFavorite());
+        }
     }
 
     @Override

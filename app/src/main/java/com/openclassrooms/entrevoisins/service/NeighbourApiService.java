@@ -24,7 +24,7 @@ public interface NeighbourApiService {
 
     /**
      * Create a neighbour
-     * @param neighbour
+     * @param neighbour the neighbour of the app
      */
     void createNeighbour(Neighbour neighbour);
 

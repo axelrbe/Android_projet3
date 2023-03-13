@@ -12,4 +12,6 @@
     <string name="neighbour_favorite_btn">neighbour favorite btn</string>
     <string name="arrow_back">arrow back</string>
     <string name="neighbour_profile_picture">Neighbour profile picture</string>
+    <string name="delete_neighbour_button">Delete neighbour button</string>
+    <string name="profile_image">profile image</string>
 </resources>

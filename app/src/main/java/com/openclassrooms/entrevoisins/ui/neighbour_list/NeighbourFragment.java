@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,9 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 
 public class NeighbourFragment extends Fragment {
@@ -42,8 +43,6 @@ public class NeighbourFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(TAB_LAYOUT_ITEM, tabLayoutItem);
         fragment.setArguments(args);
-        /* Fin du passage d'argument */
-
         return fragment;
     }
 
@@ -60,7 +59,7 @@ public class NeighbourFragment extends Fragment {
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
         return view;
     }
 
@@ -69,7 +68,7 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         List<Neighbour> neighbours = mApiService.getNeighbours();
-        String isFavoriteList = getArguments().getString(TAB_LAYOUT_ITEM);
+        String isFavoriteList = Objects.requireNonNull(getArguments()).getString(TAB_LAYOUT_ITEM);
         List<Neighbour> allFavoriteNeighbour = mApiService.getAllFavorites();
 
         if(Objects.equals(isFavoriteList, "favorites")) {
@@ -100,7 +99,6 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
-     * @param event
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {

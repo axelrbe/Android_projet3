@@ -10,6 +10,7 @@
     tools:context=".ui.neighbour_list.NeighbourInfoActivity">
 
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/neighbour_infos"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

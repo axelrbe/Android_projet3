@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,6 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder>{
 
     public static final String NEIGHBOUR_INFO = "getNeighbourInfoWithExtra";
-
     private final List<Neighbour> mNeighbours;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
@@ -67,6 +68,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return mNeighbours.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_list_avatar)
         public ImageView mNeighbourAvatar;

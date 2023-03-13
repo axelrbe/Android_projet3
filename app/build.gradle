@@ -5,6 +5,7 @@ android {
     defaultConfig {
         applicationId "com.openclassrooms.entrevoisins"
         minSdkVersion 21
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -21,6 +22,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.openclassrooms.entrevoisins'
 }
 
 dependencies {
